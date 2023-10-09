@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lieferando</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body onload="render()">
+    <header>
+        <img class="header-left-picture" src="./img/logo.png" alt="Logo">
+        <h2>Speisekarte</h2>
+        <div>
+            <img class="header-rigth-picture" src="./img/bar.png" alt="Logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="left-section">
+            <img class="main-picture" src="./img/pizza.jpg" alt="Pizzabild">
+            <div class="text-section">
+                <div class="head-section">
+                    <h1>Lieferguru-Heidelberg</h1>
+                    <img class="condition-picture info-statement" src="./img/info.png" alt="Infobild">
+                </div>
+                <div class="evaluation">
+                    <img class="bewertungen-image" src="./img/bewertungen+.png" alt="Sternchen">
+                    <a href="#">542 Bewertungen</a>
+                </div>
+                <div class="condition">
+                    <div class="liefer-condition">
+                        <img class="condition-picture" src="./img/einkauf.png" alt="Taschebild">
+                        <p>Min. 5,00 EUR</p>
+                    </div>
+                    <div class="liefer-condition">
+                        <img class="condition-picture" src="./img/info.png" alt="Infobild">
+                        <p>Lieferkosten 3,00 EUR</p>
+                    </div>
+                </div>
+                <p>Hier bekommst du das Essen mit dem maximalen Geschmack. Abwechslungsreiche Pizza- und Pastagerichte warten auf dich.<br>Alles natürlich frisch zubereitet. We will food you.</p>
+                <div class="favor-bar">
+                    <div class="favor-section">
+                        <p>Beliebt</p>
+                        <img class="condition-picture" src="./img/heart.png" alt="Herzbild">
+                    </div>
+                </div>
+                <div id="gerichte"></div>
+            </div>
+        </div>
+        <div class="warenkorb">
+            <div id="warenkorb-placeholder">
+                <h2>Warenkorb</h2>
+                <p>Bitte Gericht wählen und in den Warenkorb</p>
+            </div>
+            <div id="basket"></div>
+            <div id="sumSection"></div>
+            <div id="greatings"></div>
+        </div>
+    </main>
+</body>
+
+</html>
