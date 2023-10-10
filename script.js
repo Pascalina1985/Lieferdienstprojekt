@@ -2,7 +2,7 @@ let basket_gericht = [];
 let basket_prices = [];
 let basket_amounts = [];
 
-function render() {
+function render(j) {
     document.getElementById('gerichte').innerHTML = '';
     for (let i = 0; i < menus.length; i++) {
         const menu = menus[i];
@@ -10,25 +10,29 @@ function render() {
     }
     document.getElementById('basket').innerHTML = '';
     let totalBetweenSum = 0;
-    for (let j = 0; j < basket_gericht.length; j++) {
-        const basketMenu = basket_gericht[j];
-        const basketPrice = parseFloat(basket_prices[j]);
-        const formattedBasketPrice = basketPrice.toFixed(2).replace('.', ',');
-        const delivery = 3.00;
-        const formattedDelivery = delivery.toFixed(2).replace('.', ',');
-        const amount = parseFloat(basket_amounts[j]);
-        const betweenSum = basketPrice * amount;
-        totalBetweenSum += betweenSum;
-        const sum = (totalBetweenSum + delivery).toFixed(2).replace('.', ',');
+    if (j === 0) {
+        window.location.reload();
+    } else {
+        for (let j = 0; j < basket_gericht.length; j++) {
+            const basketMenu = basket_gericht[j];
+            const basketPrice = parseFloat(basket_prices[j]);
+            const formattedBasketPrice = basketPrice.toFixed(2).replace('.', ',');
+            const delivery = 3.00;
+            const formattedDelivery = delivery.toFixed(2).replace('.', ',');
+            const amount = parseFloat(basket_amounts[j]);
+            const betweenSum = basketPrice * amount;
+            totalBetweenSum += betweenSum;
+            const sum = (totalBetweenSum + delivery).toFixed(2).replace('.', ',');
 
-        document.getElementById('warenkorb-placeholder').style.display = 'none';
-        document.getElementById('basket').innerHTML += renderBasket(j, amount, basketMenu, formattedBasketPrice, totalBetweenSum);
-        document.getElementById('sumSection').innerHTML = renderBasketSum(totalBetweenSum, formattedDelivery, sum);
+            document.getElementById('warenkorb-placeholder').style.display = 'none';
+            document.getElementById('basket').innerHTML += renderBasket(j, amount, basketMenu, formattedBasketPrice, totalBetweenSum);
+            document.getElementById('sumSection').innerHTML = renderBasketSum(totalBetweenSum, formattedDelivery, sum);
+        }
     }
 }
 
 function addHTML(menu, i) {
-    const formattedPrice = menu['preis'].toFixed(2).replace('.', ',');
+    const formattedPrice = menu['preis'].toFixed(2); //parseFloat und ein string mit , runden ab -> 12,99 wird 12,00
     return `
       <div class="menu-container">
       <div class="menu-facts">
@@ -44,10 +48,8 @@ function addHTML(menu, i) {
 }
 
 function renderBasket(j, amount, basketMenu, formattedBasketPrice, totalBetweenSum) {
-    if (totalBetweenSum == 0) {
+    if (totalBetweenSum === 0) {
         document.getElementById('basket').style.display = 'none';
-        window.location.reload();
-
     } else {
         return `
     <div class="basketContainer">
@@ -74,15 +76,16 @@ function renderBasketSum(totalBetweenSum, formattedDelivery, sum) {
 
 function reduce(j) {
     let amount = basket_amounts[j];
-    if (amount[j] === 0) {
-        amount[j]--;
-        window.location.reload();
-    } else {
-        basket_gericht.splice(j, 1);
-        basket_prices.splice(j, 1);
-        basket_amounts.splice(j, 1);
+    if (amount > 0) {
+        basket_amounts[j]--;
+        if (basket_amounts[j] === 0) {
+            basket_gericht.splice(j, 1);
+            basket_prices.splice(j, 1);
+            basket_amounts.splice(j, 1);
+        }
+        j = basket_gericht.length;
     }
-    render();
+    render(j);
 }
 
 function increase(index) {
@@ -99,14 +102,8 @@ function addMenu(gericht, formattedPrice) {
     } else {
         basket_amounts[index]++;
     }
-    //    save('gericht', basket_gericht); // wirklich speichern?
-    //    save('preis', basket_prices); // wirklich speichern?
     render();
 }
-
-//function save(key, data) {
-//    localStorage.setItem(key, JSON.stringify(data));
-//}
 
 function removeWarenkorb() {
     document.getElementById('basket').style.display = 'none';
